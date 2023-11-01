@@ -1,0 +1,11 @@
+.images{
+    max-width: 500px;
+}
+body{
+    background-color: mediumpurple ;
+    color: rgb(15, 14, 14);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+*{
+    border-radius: 8px;
+}

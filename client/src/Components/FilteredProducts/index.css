@@ -1,0 +1,15 @@
+.image{
+    max-width: 400px;
+    
+}
+*{
+    color:white
+}
+.item_card{
+    border: dotted black;
+    margin: 30px;
+    background-color: black;
+}
+.item_sub_card{
+   
+}
