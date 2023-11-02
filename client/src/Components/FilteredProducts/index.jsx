@@ -1,17 +1,22 @@
 import React, { useContext } from "react";
 import { MyContext } from "../../Context";
 import "./index.css";
-import { useParams } from "react-router-dom";
+import {useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 
-const FilteredProducts = ({ productData}) => {
+
+
+const FilteredProducts = () => {
+  
+
  
-  const { productArray, setProductArray, handleEditSuccess } = useContext(MyContext);
+  const { productArray, setProductArray, } = useContext(MyContext);
   const { category } = useParams(); // Use useParams to get the 'category' parameter
 
 
-  const [editedData, setEditedData] = useState(productData);
+  
+ 
 
 
 
@@ -28,6 +33,7 @@ const FilteredProducts = ({ productData}) => {
 
   // Filter products based on the category
   const filteredProducts = productArray.filter((item) => item.type === category);
+ 
 
   const handleDelete = (id) => {
     console.log("the button works");
@@ -52,20 +58,20 @@ const FilteredProducts = ({ productData}) => {
   };
 
 
-  const handleEdit = () => {
-    // Send a PUT request to update the product on the server
-    axios
-      .put(`/server/products/${productData._id}`, editedData)
-      .then((response) => {
-        // Handle the response, maybe check if it was successful
-        handleEditSuccess (response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
 
-  return (
+  
+
+  
+  let navigate =useNavigate();
+    const navigateToDestination = (id) => {
+      // Use the history object to navigate to the edit route with the product ID
+      navigate(`/edit/${id}`)
+    };
+    
+  
+
+ 
+   return (
     <div>
       <h1>{`Show ${category} Products`}</h1>
 
@@ -77,8 +83,11 @@ const FilteredProducts = ({ productData}) => {
             <p>{item.description}</p>
             <p>${item.price}</p>
             <button onClick={() => handleDelete(item._id)}>Delete</button>
-            <button onClick={() => handleEdit(item._id)}>Edit</button>
+            <button onClick={() => navigateToDestination(item._id)}>Edit</button>
             <p>{item.isAvailable ? "Available" : "Not Available"}</p>
+            <div>
+           
+            </div>
           </div>
           <img className="image" src={item.image} alt={item.image} />
         </div>
@@ -86,5 +95,6 @@ const FilteredProducts = ({ productData}) => {
     </div>
   );
 };
+
 
 export default FilteredProducts;
