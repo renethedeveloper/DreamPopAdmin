@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "servers":"concurrently \"cd backend && nodemon --env-file .env server.js\" \"cd client && npm run dev\" "
+    "servers": "concurrently \"cd backend && nodemon --env-file .env server.js\" \"cd client && npm run dev\" "
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "helmet": "^7.0.0",
     "mongoose": "^8.0.0",
     "morgan": "^1.10.0",
-    "node.js": "^0.0.1-security"
+    "node.js": "^0.0.1-security",
+    "react-router-dom": "^6.18.0"
   }
 }
