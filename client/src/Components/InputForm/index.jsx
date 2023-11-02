@@ -39,13 +39,13 @@ const InputForm = () => {
                 <br />
                 Title: <input type="text" name="title" value={productData.title} onChange={(e) => setProductData({ ...productData, title: e.target.value })} />
                 <br />
-                Description: <input type="text" name="description" value={productData.description} onChange={(e) => setProductData({ ...productData, description: e.target.value })} />
-                <br />
                 Image: <input type="text" name="image" value={productData.image} onChange={(e) => setProductData({ ...productData, image: e.target.value })} />
                 <br />
                 Price: <input type="number" name="price" value={productData.price} onChange={(e) => setProductData({ ...productData, price: +e.target.value })} />
                 <br />
                 Is Available: <input type="checkbox" name="isAvailable" checked={productData.isAvailable} onChange={(e) => setProductData({ ...productData, isAvailable: e.target.checked })} />
+                <br />
+                Description: <textarea className='description' type="text" name="description" value={productData.description} onChange={(e) => setProductData({ ...productData, description: e.target.value })} />
                 <br />
                 <button>Add inventory</button>
             </form>

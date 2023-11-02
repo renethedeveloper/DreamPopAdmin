@@ -9,6 +9,23 @@ const ContextProvider = ({ children }) => {
   const [productArray, setProductArray] = useState([]);
   const [selectedImage, setSelectedImage] = useState("");
 
+
+
+
+
+// Function to handle edit success
+const handleEditSuccess = (editedProduct) => {
+  // Update the productArray state with the edited product data
+  const updatedProductArray = productArray.map((product) =>
+    product._id === editedProduct._id ? editedProduct : product
+  );
+  setProductArray(updatedProductArray);
+};
+
+
+
+
+
   useEffect(() => {
     console.log("the code works up until this point")
     const fetchData = async () => {
@@ -31,19 +48,20 @@ const ContextProvider = ({ children }) => {
     };
 
     // Check if there is data in localStorage and set productsArray
-    let productsData = localStorage.getItem("products");
-    productsData = JSON.parse(productsData);
-    if (productsData) {
-      setProductArray(productsData);
-    } else {
+    // let productsData = localStorage.getItem("products");
+    // productsData = JSON.parse(productsData);
+    // if (productsData) {
+      // setProductArray(productsData);
+    // } else {
       fetchData(); // If data is not available in localStorage, fetch it.
-    }
+    // }
   }, []); // Make sure you have imported useEffect from 'react'.
 
   const contextValue = {
     // Your context data and functions go here
     productArray,
     setProductArray,
+    handleEditSuccess,
   };
 
   return <MyContext.Provider value={contextValue}>{children}</MyContext.Provider>;

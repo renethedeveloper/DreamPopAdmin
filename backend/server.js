@@ -66,6 +66,31 @@ app.get("/products/:id", async (req, res) => {
     }
 });
 
+
+app.delete("/products/:id", async (req, res) => {
+    const productId = req.params.id;
+
+    try {
+        let deletedItem = await Product.findByIdAndDelete(productId);
+        if (!deletedItem) {
+            return res.status(404).send('No item with that ID');
+        }
+        // If the item was deleted successfully, you can return a success message here
+        res.json("Item deleted!");
+    } catch (error) {
+        console.log("Error Deleting.", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+
+
+
+
+
+
+
+
 // The code should continue running your server without the MongoDB connection part here.
 
 app.listen(PORT, () => {
