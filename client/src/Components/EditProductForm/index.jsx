@@ -8,18 +8,27 @@ const EditProductForm = () => {
 
   
 
+  
+
   const {id}= useParams();
 
-  const { handleEditSuccess,  } = useContext(MyContext);
+  const { handleEditSuccess,productArray  } = useContext(MyContext);
 
-  const [editedData, setEditedData] = useState({
-    type: "", // Initialize the properties with default values
-    title: "",
-    image: "",
-    price: 0,
-    isAvailable: false,
-    description: "",
-  });
+//just an experiment
+const filteredProducts = productArray.filter((item) => item._id === id);
+//experiment
+
+
+
+const [editedData, setEditedData] = useState({
+  _id: id, 
+  type: "",
+  title: "",
+  image: "",
+  price: 0,
+  isAvailable: false,
+  description: "",
+});
   
   
 
@@ -29,16 +38,20 @@ const EditProductForm = () => {
    
    
    
-    axios
-      .put(`/server/products/${editedData._id}`, editedData)
+    axios({
+      method: "put",
+      url: `/server/products/${editedData._id}`,//the problems is here
+      data: editedData, // Include the data
+    })
       .then((response) => {
+        console.log("TESTING");
         // Handle the response, maybe check if it was successful
         handleEditSuccess(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.error(error, "This is not working");
       });
-  }; 
+  };
 
   return (
     <div>
@@ -48,7 +61,6 @@ const EditProductForm = () => {
         Type:{""}
         <input
           type="text"
-          placeholder={editedData.type}
           name="type"
           value={editedData.type || ""}
           onChange={(e) => setEditedData({ ...editedData, type: e.target.value })}
@@ -97,7 +109,23 @@ const EditProductForm = () => {
         <br />
         <button type="submit">Submit Changes</button>
       </form>
-
+      {filteredProducts.map((item) => (
+          <div className="item_card" key={item._id}>
+            <div className="item_sub_card">
+              <p>{item.type}</p>
+              <p>{item.title}</p>
+              <p>{item.description}</p>
+              <p>${item.price}</p>
+              <button onClick={() => handleDelete(item._id)}>Delete</button>
+              <button onClick={() => navigateToDestination(item._id)}>Edit</button>
+              <p>{item.isAvailable ? "Available" : "Not Available"}</p>
+              <div>
+            
+              </div>
+            </div>
+            <img className="image" src={item.image} alt={item.image} />
+          </div>
+        ))}
    
 
     </div>

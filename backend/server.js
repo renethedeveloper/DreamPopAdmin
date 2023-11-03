@@ -76,7 +76,7 @@ app.delete("/products/:id", async (req, res) => {
     }
 });
 
-app.put("/products/edit/:id", async (req, res) => {
+app.put("/products/:id", async (req, res) => {
     const updatedInfo = req.body;
     const id = req.params.id;
     try {
