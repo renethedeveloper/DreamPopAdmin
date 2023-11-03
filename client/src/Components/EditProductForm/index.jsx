@@ -2,8 +2,11 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { MyContext } from "../../Context";
 import { useParams } from "react-router-dom";
+import FilteredProducts from "../FilteredProducts";
 
 const EditProductForm = () => {
+
+  
 
   const {id}= useParams();
 
@@ -35,15 +38,17 @@ const EditProductForm = () => {
       .catch((error) => {
         console.error(error);
       });
-  };
+  }; 
 
   return (
     <div>
-      <h1>TESTING</h1>
+      <h1>Editing</h1>
+     
       <form onSubmit={handleSubmitEdit}>
-        Type:{" "}
+        Type:{""}
         <input
           type="text"
+          placeholder={editedData.type}
           name="type"
           value={editedData.type || ""}
           onChange={(e) => setEditedData({ ...editedData, type: e.target.value })}
@@ -92,6 +97,9 @@ const EditProductForm = () => {
         <br />
         <button type="submit">Submit Changes</button>
       </form>
+
+   
+
     </div>
   );
 };
