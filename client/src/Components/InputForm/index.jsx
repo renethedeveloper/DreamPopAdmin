@@ -20,7 +20,7 @@ const InputForm = () => {
         console.log("Testing before Axios call");
         axios({
             method: "POST",
-            url: "/products",
+            url: "/server/products",
             data: productData
         }).then((res) => {
             console.log(res);

@@ -5,44 +5,27 @@ import { useParams } from "react-router-dom";
 import FilteredProducts from "../FilteredProducts";
 
 const EditProductForm = () => {
+  const { id } = useParams();
+  const { handleEditSuccess, productArray } = useContext(MyContext);
 
-  
+  // Find the product based on its ID
+  const productToEdit = productArray.find((item) => item._id === id);
 
-  
+  const [editedData, setEditedData] = useState({
+    ...productToEdit, // Initialize with the existing product data
+  });
 
-  const {id}= useParams();
-
-  const { handleEditSuccess,productArray  } = useContext(MyContext);
-
-//just an experiment
-const filteredProducts = productArray.filter((item) => item._id === id);
-//experiment
-
-
-
-const [editedData, setEditedData] = useState({
-  _id: id, 
-  type: "",
-  title: "",
-  image: "",
-  price: 0,
-  isAvailable: false,
-  description: "",
-});
-  
-  
+  const handleFieldChange = (field, value) => {
+    // Update only the specified field
+    setEditedData({ ...editedData, [field]: value });
+  };
 
   const handleSubmitEdit = (e) => {
-    e.preventDefault(); 
-    // Send a PUT request to update the product on the server
-   
-   
-   
-    axios({
-      method: "put",
-      url: `/server/products/${editedData._id}`,//the problems is here
-      data: editedData, // Include the data
-    })
+    e.preventDefault();
+
+    // Send a PUT request to update the product with editedData
+    axios
+      .put(`/server/products/${editedData._id}`, editedData)
       .then((response) => {
         console.log("TESTING");
         // Handle the response, maybe check if it was successful
@@ -56,14 +39,14 @@ const [editedData, setEditedData] = useState({
   return (
     <div>
       <h1>Editing</h1>
-     
+
       <form onSubmit={handleSubmitEdit}>
-        Type:{""}
+        Type:{" "}
         <input
           type="text"
           name="type"
-          value={editedData.type || ""}
-          onChange={(e) => setEditedData({ ...editedData, type: e.target.value })}
+          value={editedData.type}
+          onChange={(e) => handleFieldChange("type", e.target.value)}
         />
         <br />
         Title:{" "}
@@ -71,15 +54,7 @@ const [editedData, setEditedData] = useState({
           type="text"
           name="title"
           value={editedData.title}
-          onChange={(e) => setEditedData({ ...editedData, title: e.target.value })}
-        />
-        <br />
-        Image:{" "}
-        <input
-          type="text"
-          name="image"
-          value={editedData.image}
-          onChange={(e) => setEditedData({ ...editedData, image: e.target.value })}
+          onChange={(e) => handleFieldChange("title", e.target.value)}
         />
         <br />
         Price:{" "}
@@ -87,47 +62,29 @@ const [editedData, setEditedData] = useState({
           type="number"
           name="price"
           value={editedData.price}
-          onChange={(e) => setEditedData({ ...editedData, price: +e.target.value })}
-        />
-        <br />
-        Is Available:{" "}
-        <input
-          type="checkbox"
-          name="isAvailable"
-          checked={editedData.isAvailable}
-          onChange={(e) => setEditedData({ ...editedData, isAvailable: e.target.checked })}
+          onChange={(e) => handleFieldChange("price", +e.target.value)}
         />
         <br />
         Description:{" "}
-        <textarea
-          className="description"
+        <input
           type="text"
           name="description"
           value={editedData.description}
-          onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
+          onChange={(e) => handleFieldChange("description", e.target.value)}
         />
         <br />
+        Image:{" "}
+        <input
+          type="text"
+          name="image"
+          value={editedData.image}
+          onChange={(e) => handleFieldChange("image", e.target.value)}
+        />
+        <br />
+       
         <button type="submit">Submit Changes</button>
       </form>
-      {filteredProducts.map((item) => (
-          <div className="item_card" key={item._id}>
-            <div className="item_sub_card">
-              <p>{item.type}</p>
-              <p>{item.title}</p>
-              <p>{item.description}</p>
-              <p>${item.price}</p>
-              <button onClick={() => handleDelete(item._id)}>Delete</button>
-              <button onClick={() => navigateToDestination(item._id)}>Edit</button>
-              <p>{item.isAvailable ? "Available" : "Not Available"}</p>
-              <div>
-            
-              </div>
-            </div>
-            <img className="image" src={item.image} alt={item.image} />
-          </div>
-        ))}
-   
-
+      
     </div>
   );
 };

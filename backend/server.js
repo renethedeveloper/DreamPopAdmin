@@ -5,6 +5,9 @@ const cors = require("cors");
 const Product = require("./models/Product");
 require("dotenv").config();
 require("./config");
+const User = require('./models/User');
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 const PORT = 3000;
 
@@ -12,6 +15,7 @@ const app = express();
 
 // Middleware
 app.use(express.static("public"));
+
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 app.use(morgan("dev"));
@@ -20,7 +24,90 @@ app.use(helmet());
 // Routes
 app.get("/", (req, res) => {
     res.send({ message: "Hello World!" });
+
 });
+
+
+
+app.get("/check_token", async (req, res) => {
+    const token = req.headers['authorization'];
+
+    if (!token) {
+        return res.status(401).send({ auth: false, message: 'No token provided.' });
+    }
+
+    jwt.verify(token, process.env.TOKEN_SECRET, function(err, decoded) {
+        if (err) {
+            return res.status(500).send({ auth: false, statusCode: 500, message: 'Failed to validate token.' });
+        } else {
+            // Token is valid, and `decoded` contains the payload data
+
+            // You can use `decoded` to access the payload data, which typically includes the user's information
+            const userId = decoded.user.id; // Replace with the actual property name in your payload
+
+            // You can perform actions based on the decoded payload data
+            // For example, you can fetch user information from your database based on the userId
+
+            // Then, you can send back a response with the user's information or perform other actions
+
+            res.status(200).send({ auth: true, userId });
+        }
+    });
+});
+
+
+
+app.post("/signup", async (req, res) => {
+    try {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+  
+      const user = await User.create({
+        ...req.body,
+        password: hashedPassword
+      }); 
+      console.log("sign up went smoothly");
+     
+  
+      res.json(user);
+    } catch (error) {
+      console.error("Error during signup:", error);
+      res.status(500).json({ message: "Error during signup" });
+    }
+  });
+  
+
+  app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+  
+    try {
+      const user = await User.findOne({ email });//or use findOne?
+  
+      if (!user) {
+        return res.status(401).json({ error: "User not found." });
+      }
+  
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+  
+      if (!isPasswordValid) {
+        return res.status(401).json({ error: "Wrong Password" });
+      }
+     
+  
+      // If both the email and password are correct, you can return a token for authentication
+      const token = jwt.sign({user}, process.env.TOKEN_SECRET, {expiresIn: "1h"});
+      delete user.password;
+      // You should use a library like JSON Web Tokens (JWT) for this purpose.
+      res.status(200).json({ message: "Login Successful", token });
+
+    } catch (error) {
+      console.error("Error during Login", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
+
+
+
 
 app.post("/products", async (req, res) => {
     try {
