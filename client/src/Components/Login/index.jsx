@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import { MyContext } from '../../Context';
 
-const Login = ({setUser}) => {
+const Login = ({ setUser }) => {
+  const { setToken } = useContext(MyContext);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [secretKey, setSecretKey] = useState('');
+  const [userType, setUserType] = useState('');
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -21,14 +26,15 @@ const Login = ({setUser}) => {
       const response = await axios({
         method: 'post',
         url: '/server/login', // Adjust the URL to your server's sign-in endpoint
-        data: { email, password },
+        data: { secretKey },
       });
+      localStorage.removeItem('user_token');
+      localStorage.setItem('user_token', response.data.token);
+      console.log('Token is in Storage!');
+      setMessage('Login successful!');
+      console.log(response.data);
+      setToken(response.data.token);
 
-      localStorage.setItem("user_token", response.data.token)
-      console.log("Token is in Storage!")
-      setMessage( 'Login successful!');
-      console.log(response.data)
-      
       // Store authentication token or user info in local storage or session storage to keep the user authenticated.
     } catch (error) {
       setMessage(error?.response?.data?.message || 'Error during sign-in');
@@ -37,24 +43,14 @@ const Login = ({setUser}) => {
 
   return (
     <div>
-      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email:</label>
+          <label>Secret Key</label>
           <input
             type="text"
-            placeholder="Email"
-            value={email}
-            onChange={handleEmailChange}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={handlePasswordChange}
+            placeholder="Secret!"
+            value={secretKey}
+            onChange={(e) => setSecretKey(e.target.value)}
           />
         </div>
         <div>

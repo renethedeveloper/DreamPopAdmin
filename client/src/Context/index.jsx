@@ -8,7 +8,8 @@ const ContextProvider = ({ children }) => {
   // Define your state and functions here
   const [productArray, setProductArray] = useState([]);
   const [selectedImage, setSelectedImage] = useState("");
-  const [updatedProductArray, setUpDatedProductArray] = useState(productArray)
+  const [updatedProductArray, setUpDatedProductArray] = useState(productArray);
+  const [token, setToken] =useState(false);
 
 
 
@@ -67,6 +68,7 @@ const handleEditSuccess = (editedProduct) => {
     setUpDatedProductArray,
     selectedImage,
     setSelectedImage,
+    token, setToken
   };
 
   return <MyContext.Provider value={contextValue}>{children}</MyContext.Provider>;

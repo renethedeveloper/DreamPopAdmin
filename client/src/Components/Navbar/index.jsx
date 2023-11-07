@@ -9,8 +9,9 @@ const Navbar = () => {
       <Link to="/products/Kitchen">Kitchen</Link>
       <Link to="/products/Furniture">Furniture</Link>
       <Link to="/input">InputForm</Link>
-      <Link to="/login ">Login</Link>
-      <Link to="/signup ">Sign Up</Link>
+      {/* <Link to="/login ">Login</Link> */}
+      <Link to="/logout ">Logout</Link>
+    {/* <Link to="/signup ">Sign Up</Link>   */}
     </div>
   );
 };

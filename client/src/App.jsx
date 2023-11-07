@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import FilteredProducts from './Components/FilteredProducts';
 import EditProductForm from './Components/EditProductForm';
@@ -8,27 +8,35 @@ import "./App.css"
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
 import axios from 'axios';
+import { MyContext } from './Context';
+import Logout from './Components/Logout';
 
 
 
 function App() {
 
   const [user, setUser] = useState(null)
-
+  const {token , setToken} = useContext(MyContext)
 
 useEffect(()=>{
   let token = localStorage.getItem("user_token")
   if(token){
     //here the token has to be taken to the server and verified. 
-    axios({
-      method:"GET",
-      url:"/check_token",
-      header:{
-        authorization: token
-      }
-    }).then((res)=>{
-      console.log(res)
-    })
+    try {
+      axios({
+        method:"GET",
+        url:"/server/check_token",
+        headers:{
+          Authorization: token
+        }
+      }).then((res)=>{
+        console.log(res)
+        setToken(token)
+      })
+
+    } catch(err) {
+      // error hrere
+    }
   }
 },[])
 
@@ -36,20 +44,29 @@ useEffect(()=>{
   return (
     <div>
     
-     
-       <Login setUser={setUser}/>
+     { !token ?  <Login setUser={setUser}/> :
+       <>
         <Navbar />  
+            <Routes>
+            <Route path="/products/:category" element={<FilteredProducts />} />
+            <Route path="/products/edit/:id"  element={<EditProductForm />} />
+            <Route path="/input" element={<InputForm />} />
+            <Route path="/logout" element={<Logout />} />
+            {/* <Route path="/signup" element={<SignUp />} /> */}
+          </Routes>
+
+
+       </>
+      
+    
+    }
+      
+      
      
     
     
     
-      <Routes>
-        <Route path="/products/:category" element={<FilteredProducts />} />
-        <Route path="/products/edit/:id"  element={<EditProductForm />} />
-        <Route path="/input" element={<InputForm />} />
-      <Route path="/login" element={<Login />} />  
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
+
     </div>
   );
 }
