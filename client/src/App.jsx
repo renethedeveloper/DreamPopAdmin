@@ -38,7 +38,7 @@ useEffect(()=>{
     
      
        <Login setUser={setUser}/>
-       {user?<div> <Navbar />   </div>: <></>}
+        <Navbar />  
      
     
     
@@ -47,7 +47,7 @@ useEffect(()=>{
         <Route path="/products/:category" element={<FilteredProducts />} />
         <Route path="/products/edit/:id"  element={<EditProductForm />} />
         <Route path="/input" element={<InputForm />} />
-      {/* <Route path="/login" element={<Login />} />   */}
+      <Route path="/login" element={<Login />} />  
         <Route path="/signup" element={<SignUp />} />
       </Routes>
     </div>

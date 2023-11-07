@@ -26,7 +26,7 @@ const Login = ({setUser}) => {
 
       localStorage.setItem("user_token", response.data.token)
       console.log("Token is in Storage!")
-      setMessage( 'Sign in successful!');
+      setMessage( 'Login successful!');
       console.log(response.data)
       
       // Store authentication token or user info in local storage or session storage to keep the user authenticated.
