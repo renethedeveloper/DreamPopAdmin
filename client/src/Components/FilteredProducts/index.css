@@ -7,6 +7,7 @@
 }
 .item_card{
     border: dotted black;
+    max-width:400px;
     margin: 30px;
     background-color: black;
 }
