@@ -4,7 +4,7 @@ import "./index.css"
 
 const InputForm = () => {
     const initialProductData = {
-        type: null,
+        type: "Kitchen",
         title: "",
         description: "",
         image: "",
@@ -35,7 +35,11 @@ const InputForm = () => {
         <div>
             <h1>DreamPop Inventory</h1>
             <form onSubmit={handleSubmit}>
-                Type: <input type="text" name="type" value={productData.type || ''} onChange={(e) => setProductData({ ...productData, type: e.target.value })} />
+                Kitchen: <input type="radio" name="type" value="Kitchen" checked={productData.type=== "Kitchen"} onChange={(e) => setProductData({ ...productData, type: e.target.value })} />
+               
+                Decor: <input type="radio" name="type" value="Decor" checked={productData.type=== "Decor"} onChange={(e) => setProductData({ ...productData, type: e.target.value })} />
+              
+                Furniture: <input type="radio" name="type" value="Furniture" checked={productData.type=== "Furniture"} onChange={(e) => setProductData({ ...productData, type: e.target.value })} />
                 <br />
                 Title: <input type="text" name="title" value={productData.title} onChange={(e) => setProductData({ ...productData, title: e.target.value })} />
                 <br />
