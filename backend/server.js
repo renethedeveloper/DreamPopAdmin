@@ -23,6 +23,12 @@ app.use(express.json());
 app.use(cors({ origin: "*" }));
 app.use(morgan("dev"));
 app.use(helmet());
+app.use((req, res, next)=> {
+  if (req.path.startsWith('/server')) {
+      req.url = req.url.replace('/server', ''); // strip /server from the path
+  }
+  next();
+});
 // const authMiddleware = require("./authMiddleware")
 
 
