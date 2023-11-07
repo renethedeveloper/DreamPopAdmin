@@ -8,6 +8,7 @@ require("./config");
 const User = require("./models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const path = require("path");
 
 
 
@@ -16,7 +17,7 @@ const PORT = 3000;
 const app = express();
 
 // Middleware
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "../client/dist")));
 
 app.use(express.json());
 app.use(cors({ origin: "*" }));
@@ -27,9 +28,9 @@ app.use(helmet());
 
 
 // Routes
-app.get("/", (req, res) => {
-  res.send({ message: "Hello World!" });
-});
+
+
+
 
 // app.post('/admin-action', authMiddleware.checkAdminRole, (req, res) => {
 //   // This code will only execute if the user has the 'admin' role
