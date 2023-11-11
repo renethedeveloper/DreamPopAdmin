@@ -1,10 +1,13 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { MyContext } from "../../Context";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import FilteredProducts from "../FilteredProducts";
+import { useNavigate } from "react-router-dom";
+import InputForm from "../InputForm";
 
 const EditProductForm = () => {
+  const navigate =useNavigate();
   const { id } = useParams();
   const { handleEditSuccess, productArray } = useContext(MyContext);
 
@@ -30,10 +33,13 @@ const EditProductForm = () => {
         console.log("TESTING");
         // Handle the response, maybe check if it was successful
         handleEditSuccess(response.data);
+        navigate(-1)
       })
       .catch((error) => {
         console.error(error, "This is not working");
       });
+     
+      
   };
 
   return (
