@@ -81,6 +81,22 @@ const EditProductForm = () => {
           onChange={(e) => handleFieldChange("image", e.target.value)}
         />
         <br />
+        <input
+  type="radio"
+  name="available"
+  value="true"  // or some other value that represents "true"
+  onChange={(e) => handleFieldChange("isAvailable", e.target.value)}
+/>
+<span>Available</span>
+
+<input
+  type="radio"
+  name="available"
+  value="false"  // or some other value that represents "false"
+  onChange={(e) => handleFieldChange("isAvailable", e.target.value)}
+/>
+<span>Not Available</span>
+
        
         <button type="submit">Submit Changes</button>
       </form>

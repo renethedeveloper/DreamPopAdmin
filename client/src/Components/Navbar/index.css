@@ -1,4 +1,11 @@
-
-.choices{
-    color: azure;
+.navBar {
+ 
+  position: absolute;
+  margin-left: 18%;
+  margin-top: 10px;
+  top: 0;
+  font-weight: 600;
+}
+.link{
+    color: lightskyblue;
 }

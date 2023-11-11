@@ -4,13 +4,14 @@ import "./index.css";
 
 const Navbar = () => {
   return (
-    <div className='choices'>
-      <Link to="/products/Decor">Decor</Link>
-      <Link to="/products/Kitchen">Kitchen</Link>
-      <Link to="/products/Furniture">Furniture</Link>
-      <Link to="/input">InputForm</Link>
+    <div className='navBar'>
+      <Link className='link' to="/products/Decor">Decor</Link>
+      <Link className='link'to="/products/Kitchen">Kitchen</Link>
+      <Link className='link'to="/products/Furniture">Furniture</Link>
+      <Link className='link'to="/products/Lighting">Lighting</Link>
+      <Link className='link'to="/input">InputForm</Link>
       {/* <Link to="/login ">Login</Link> */}
-      <Link to="/logout ">Logout</Link>
+      <Link className='link'to="/logout ">Logout</Link>
     {/* <Link to="/signup ">Sign Up</Link>   */}
     </div>
   );

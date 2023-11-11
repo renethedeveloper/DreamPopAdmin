@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "vite build",
     "start": "node_modules/serve/bin/serve -s dist",
-
+    "servers":"concurrently \"cd backend && nodemon --env-file .env server.js\" \"cd client && npm run dev\" ",
     "build": "echo 'No build step required for the backend.'"
   },
   "author": "",

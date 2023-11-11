@@ -73,30 +73,30 @@
     
 
   
-    return (
-      <div>
-        <h1>{`Show ${category} Products`}</h1>
-
-        {filteredProducts.map((item) => (
-          <div className="item_card" key={item._id}>
-            <div className="item_sub_card">
-              <p>{item.type}</p>
-              <p>{item.title}</p>
-              <p>{item.description}</p>
-              <p>${item.price}</p>
-              <button onClick={() => handleDelete(item._id)}>Delete</button>
-              <button onClick={() => navigateToDestination(item._id)}>Edit</button>
-              <p>{item.isAvailable ? "Available" : "Not Available"}</p>
-              <div>
-            
+      return (
+        <div>
+          <h1 className="h1">{`${category}`}</h1>
+    
+          {filteredProducts.map((item) => (
+            <div className="item_card" key={item._id}>
+              <div className="item_sub_card">
+                {item.isAvailable || (
+                  <div className="sold-bar">
+                    <p>SOLD</p>
+                  </div>
+                )}
+                <h2 className="itemTitle">{`"${item.title}"`}</h2>
+                <p className="description">{item.description}</p>
+                <p className="price">Price ${item.price}</p>
+                <button onClick={() => handleDelete(item._id)}>Delete</button>
+                <button onClick={() => navigateToDestination(item._id)}>Edit</button>
+                <p>{item.isAvailable ? "Available" : "Not Available"}</p>
               </div>
+              <img className="image" src={item.image} alt={item.image} />
             </div>
-            <img className="image" src={item.image} alt={item.image} />
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-
-  export default FilteredProducts;
+          ))}
+        </div>
+      );
+    };
+    
+    export default FilteredProducts;

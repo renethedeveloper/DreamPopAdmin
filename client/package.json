@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "start": "serve -s dist"
+    "dev": "vite",
+    "start": "serve -s dist",
+    "servers": "concurrently \"cd backend && nodemon --env-file .env server.js\" \"cd client && npm run dev\" "
   
 
   },
