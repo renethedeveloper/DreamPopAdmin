@@ -25,8 +25,8 @@ const Login = ({ setUser }) => {
     try {
       const response = await axios({
         method: 'post',
-        url: '/server/login', // Adjust the URL to your server's sign-in endpoint
-        data: { secretKey },
+        url: 'http://localhost:3001/login', 
+        data: { secretKey }
       });
       localStorage.removeItem('user_token');
       localStorage.setItem('user_token', response.data.token);
@@ -37,7 +37,8 @@ const Login = ({ setUser }) => {
 
       // Store authentication token or user info in local storage or session storage to keep the user authenticated.
     } catch (error) {
-      setMessage(error?.response?.data?.message || 'Error during sign-in');
+      console.error("Error during login:", error); 
+      setMessage(error?.response?.data?.message || 'Error during sign-in!!!');
     }
   };
 

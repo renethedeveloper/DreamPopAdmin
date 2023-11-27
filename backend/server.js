@@ -12,7 +12,7 @@ const path = require("path");
 
 
 
-const PORT = 3000;
+const PORT = 3001;
 
 const app = express();
 
@@ -89,6 +89,7 @@ app.post("/signup", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { secretKey } = req.body;
+  
 
   try {
     // const user = await User.findOne({ email }); //or use findOne?
