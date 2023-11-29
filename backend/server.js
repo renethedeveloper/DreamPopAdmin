@@ -9,6 +9,8 @@ const User = require("./models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const path = require("path");
+const Event = require('./models/Events');
+
 
 
 
@@ -139,6 +141,36 @@ app.post("/products", async (req, res) => {
       .json({ error: "Internal Server Error: Failed to create the product." });
   }
 });
+
+
+app.post("/events", async (req, res) => {
+  try {
+    
+    const newEvent = req.body;
+    if (!newEvent.title || !newEvent.description) {
+      return res
+        .status(400)
+        .json({
+          error:
+            "Bad Request: Incomplete",
+        });
+    }
+    const event = await Event.create(newEvent);
+    console.log(`Created Event: ${Event.title}`);
+    res.status(201).json({ event, message: "Event Created!" });
+    
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error: Failed to create the event." });
+  }
+});
+
+
+
+
+
 
 app.get("/products", async (req, res) => {
   try {
