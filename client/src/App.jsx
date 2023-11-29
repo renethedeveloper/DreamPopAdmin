@@ -10,6 +10,7 @@ import SignUp from './Components/SignUp';
 import axios from 'axios';
 import { MyContext } from './Context';
 import Logout from './Components/Logout';
+import Events from './Components/Events';
 
 
 
@@ -48,6 +49,7 @@ useEffect(()=>{
        <>
         <Navbar />  
             <Routes>
+            <Route path="/events" element={<Events />} />
             <Route path="/products/:category" element={<FilteredProducts />} />
             <Route path="/products/edit/:id"  element={<EditProductForm />} />
             <Route path="/input" element={<InputForm />} />
