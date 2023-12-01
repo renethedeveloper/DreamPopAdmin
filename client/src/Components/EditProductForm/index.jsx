@@ -79,12 +79,12 @@ const EditProductForm = () => {
           onChange={(e) => handleFieldChange("description", e.target.value)}
         />
         <br />
-        Image:{" "}
+        Images (separated by commas):{" "}
         <input
           type="text"
-          name="image"
-          value={editedData.image}
-          onChange={(e) => handleFieldChange("image", e.target.value)}
+          name="images"
+          value={editedData.images?.join(',')}
+          onChange={(e) => handleFieldChange("images", e.target.value.split(','))}
         />
         <br />
         <input

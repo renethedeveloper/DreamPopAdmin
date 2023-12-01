@@ -4,10 +4,10 @@ import "./index.css";
 
 const InputForm = () => {
     const initialProductData = {
-        type: "Kitchen",
+        type: "",
         title: "",
         description: "",
-        image: "",
+        images: [], 
         price: null,
         isAvailable: false
     };
@@ -30,6 +30,27 @@ const InputForm = () => {
             e.target.value = ""
         });
     }
+    const handleImageChange = (e, index) => {
+        setProductData((prevData) => {
+            // Create a new array with updated image URL at the specified index
+            const updatedImages = [...prevData.images];
+            updatedImages[index] = e.target.value;
+    
+            // Return the new state
+            return { ...prevData, images: updatedImages };
+        });
+    };
+    
+    
+
+    const addImageInput = () => {
+        setProductData((prevData) => {
+            // Add an empty string to the images array when a new image input is added
+            return { ...prevData, images: [...prevData.images, ""] };
+        });
+    };
+    
+
 
     return (
         <form className='inputForm' onSubmit={handleSubmit}>
@@ -49,8 +70,19 @@ const InputForm = () => {
             </div>
 
             <div className='form-group'>
-                <label>Image:</label>
-                <input type="text" name="image" value={productData.image} onChange={(e) => setProductData({ ...productData, image: e.target.value })} />
+                <label>Images:</label>
+                {productData.images.map((image, index) => (
+                    <input
+                        key={index}
+                        type="text"
+                        name={`image-${index}`}
+                        value={image}
+                        onChange={(e) => handleImageChange(e, index)}
+                    />
+                ))}
+                <button type="button" onClick={addImageInput}>
+                    Add Image
+                </button>
             </div>
 
             <div className='form-group'>

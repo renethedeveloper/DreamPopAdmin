@@ -26,7 +26,7 @@
     const [type, setType] = useState(productArray.type);
     const [title, setTitle] = useState(productArray.title);
     const [description, setDescription] = useState(productArray.description);
-    const [image, setImage] = useState(productArray.type);
+    const [images, setImages] = useState(productArray.type);
     const [price, setPrice] = useState(productArray.price);
     const [isAvailable, setIsAvailable] = useState(false);
 
@@ -92,7 +92,7 @@
                 <button onClick={() => navigateToDestination(item._id)}>Edit</button>
                 <p>{item.isAvailable ? "Available" : "Not Available"}</p>
               </div>
-              <img className="image" src={item.image} alt={item.image} />
+              <img className="image" src={item.images[0]} alt={item.image} />
             </div>
           ))}
         </div>

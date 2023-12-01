@@ -7,7 +7,7 @@ export const MyContext = createContext();
 const ContextProvider = ({ children }) => {
   // Define your state and functions here
   const [productArray, setProductArray] = useState([]);
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImages, setSelectedImages] = useState("");
   const [updatedProductArray, setUpDatedProductArray] = useState(productArray);
   const [token, setToken] =useState(false);
 
@@ -66,8 +66,8 @@ const handleEditSuccess = (editedProduct) => {
     handleEditSuccess,
     updatedProductArray,
     setUpDatedProductArray,
-    selectedImage,
-    setSelectedImage,
+    selectedImages,
+    setSelectedImages,
     token, setToken
   };
 
